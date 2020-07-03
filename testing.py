@@ -6,13 +6,18 @@ from tqdm import tqdm
 from network import Net
 from training import PATH, transform
 
+
+def load_model():
+	net = Net()
+	net.load_state_dict(torch.load(PATH))
+	return net
+
 testset = torchvision.datasets.MNIST("./training-data", train=False, download=True, transform=transform)
 testloader = torch.utils.data.DataLoader(testset, batch_size=4,
 										 shuffle=False, num_workers=2)
 
 if __name__ == "__main__":
-	net = Net()
-	net.load_state_dict(torch.load(PATH))
+	net = load_model()
 
 	correct = 0
 	total = 0

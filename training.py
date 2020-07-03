@@ -27,7 +27,7 @@ trainloader = torch.utils.data.DataLoader(trainset, batch_size=4,
 
 
 if __name__ == "__main__":
-	# data_iter = iter(testloader)
+	# data_iter = iter(trainloader)
 	# # data_iter.next() takes next batch (size=4)
 	# images, labels = data_iter.next()
 	# print(labels)
@@ -40,7 +40,7 @@ if __name__ == "__main__":
 	loss_fn = torch.nn.MSELoss()
 
 	# training loop
-	for epoch in range(1):
+	for epoch in range(2):
 
 		running_loss = 0.0
 		i = 0
@@ -59,11 +59,16 @@ if __name__ == "__main__":
 				loss.backward()
 				optimizer.step()
 
-				tqdm_iterator.set_description(f"{loss:5f}")
-				# i += 1
-				# if i > 1000:
-				# 	break
+
+				i += 1
+				running_loss += loss.item()
+				if i > 1000:
+					i = 0
+					tqdm_iterator.set_description(f"{running_loss:5f}")
+					running_loss = 0.0
+
+
 
 	print('Finished Training')
 
-	torch.save(net.state_dict(), PATH)
+	# torch.save(net.state_dict(), PATH)

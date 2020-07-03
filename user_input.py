@@ -19,7 +19,6 @@ class DrawUI:
 		self.fig.canvas.mpl_connect('motion_notify_event', self.draw)
 
 		self.image = ax.imshow(self.drawing, cmap="gray", vmin=0, vmax=1)
-		plt.show()
 
 	def draw(self, event):
 		if event.button == 1:  # left-click
